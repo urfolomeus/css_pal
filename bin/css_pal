@@ -3,7 +3,9 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'css_pal'
 
-mode, val = ARGV
-val = val.to_f
+mode, param = ARGV
 
-puts Converter.send(mode, val)
+MATCHER = /(\d*[\.,]?\d*)(.*)/
+val, unit = param.match(MATCHER)[1..2]
+
+puts UnitConverter.send("#{unit}_#{mode}", val.to_f)

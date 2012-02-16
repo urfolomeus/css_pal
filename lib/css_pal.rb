@@ -1,13 +1,28 @@
-class Converter
+class UnitConverter
   PRECISION = 1
 
   def self.pt_to_em(val)
-    result = (val / 12.0).round(PRECISION)
-    "#{result}em"
+    convert("em") { calc_pt_to_em(val) }
   end
 
   def self.em_to_percent(val)
-    result = (val * 100)
-    sprintf "%g%", result
+    convert("%") { calc_em_to_percent(val) }
+  end
+
+  def self.pt_to_percent(val)
+    em = calc_pt_to_em(val)
+    convert("%") { calc_em_to_percent(em) }
+  end
+
+  def self.convert(unit, &block)
+    sprintf "%g#{unit}", yield
+  end
+
+  def self.calc_em_to_percent(val)
+    (val * 100)
+  end
+
+  def self.calc_pt_to_em(val)
+    (val / 12.0).round(PRECISION)
   end
 end

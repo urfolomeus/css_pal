@@ -2,6 +2,27 @@ Feature:
   Gives the user a set of tools that can be used to convert
   values from one unit into another.
 
+  Scenario: running with no arguments
+    When I run `css_pal`
+    Then it should fail with:
+      """
+      Correct format css_pal <mode> <value>
+      """
+
+  Scenario: running with too few arguments
+    When I run `css_pal to_em`
+    Then it should fail with:
+      """
+      Correct format css_pal <mode> <value>
+      """
+
+  Scenario: running with invalid arguments (no number)
+    When I run `css_pal to_em badger`
+    Then it should fail with:
+      """
+      I don't know how to 'badger_to_em'
+      """
+
   Scenario Outline: converting pts to ems
     When I run `css_pal to_em <pt>`
     Then it should pass with:

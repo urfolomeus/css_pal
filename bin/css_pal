@@ -5,7 +5,17 @@ require 'css_pal'
 
 mode, param = ARGV
 
+if mode.nil? || param.nil?
+  puts "Correct format css_pal <mode> <value>"
+  exit 1
+end
+
 MATCHER = /(\d*[\.,]?\d*)(.*)/
 val, unit = param.match(MATCHER)[1..2]
 
-puts UnitConverter.send("#{unit}_#{mode}", val.to_f)
+begin
+  puts UnitConverter.send("#{unit}_#{mode}", val.to_f)
+rescue Exception => e
+  puts e.message
+  exit 1
+end

@@ -42,4 +42,12 @@ describe UnitConverter do
       UnitConverter.pt_to_percent(24).should == "200%"
     end
   end
+
+  describe "method missing" do
+    it "raises a friendly error if the method isn't found" do
+      expect {
+        UnitConverter.send("badger_mushroom", 0.0)
+      }.to raise_error("I don't know how to 'badger_mushroom'")
+    end
+  end
 end

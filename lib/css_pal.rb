@@ -25,4 +25,8 @@ class UnitConverter
   def self.calc_pt_to_em(val)
     (val / 12.0).round(PRECISION)
   end
+
+  def self.method_missing(*args)
+    raise "I don't know how to '#{args.first}'"
+  end
 end

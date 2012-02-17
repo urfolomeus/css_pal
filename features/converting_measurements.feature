@@ -16,11 +16,18 @@ Feature:
       Correct format css_pal <mode> <value>
       """
 
-  Scenario: running with invalid arguments (no number)
+  Scenario: giving an invalid value to a valid method
     When I run `css_pal to_em badger`
     Then it should fail with:
       """
       I don't know how to 'badger_to_em'
+      """
+
+  Scenario: giving a valid value to an invalid method
+    When I run `css_pal badger 12pt`
+    Then it should fail with:
+      """
+      I don't know how to 'pt_badger'
       """
 
   Scenario Outline: converting pts to ems

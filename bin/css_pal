@@ -14,7 +14,9 @@ MATCHER = /(\d*[\.,]?\d*)(.*)/
 val, unit = param.match(MATCHER)[1..2]
 
 begin
-  puts UnitConverter.send("#{unit}_#{mode}", val.to_f)
+  action = "#{unit}_#{mode}"
+  value  = val.to_f
+  puts UnitConverter.send(action, value)
 rescue Exception => e
   puts e.message
   exit 1

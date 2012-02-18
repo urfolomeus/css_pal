@@ -19,14 +19,20 @@ class UnitConverter
   end
 
   def self.calc_em_to_percent(val)
-    (val * 100)
+    (val.to_f * 100)
   end
 
   def self.calc_pt_to_em(val)
-    (val / 12.0).round(PRECISION)
+    (val.to_f / 12.0).round(PRECISION)
   end
 
-  def self.method_missing(*args)
-    raise "I don't know how to '#{args.first}'"
+  def self.to_hex(val)
+    hues = val.split(',')
+    hues.map! { |hue| hexualize(hue) }
+    "##{hues.join}"
+  end
+
+  def self.hexualize(hue)
+    hue.to_i.to_s(16).rjust(2,"0")
   end
 end

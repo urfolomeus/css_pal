@@ -3,20 +3,25 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'css_pal'
 
-mode, param = ARGV
-
-if mode.nil? || param.nil?
-  puts "Correct format css_pal <mode> <value>"
-  exit 1
+def pattern
+  value_pattern = /(\d*[\.,]?\d*,?\d*)/
+  mode_pattern = /(.*)/
+  /#{value_pattern}#{mode_pattern}/
 end
 
-MATCHER = /(\d*[\.,]?\d*)(.*)/
-val, unit = param.match(MATCHER)[1..2]
-
 begin
-  action = "#{unit}_#{mode}"
-  value  = val.to_f
+  mode, param = ARGV
+
+  raise "Correct format css_pal <mode> <value>" if mode.nil? || param.nil?
+
+  value, unit = param.match(pattern)[1..2]
+
+  action = "#{unit}_#{mode}".gsub(/^_/,'')
+
   puts UnitConverter.send(action, value)
+rescue NoMethodError => e
+  puts "I don't know how to '#{action}'"
+  exit 1
 rescue Exception => e
   puts e.message
   exit 1

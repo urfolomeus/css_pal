@@ -18,10 +18,7 @@ begin
 
   action = "#{unit}_#{mode}".gsub(/^_/,'')
 
-  puts UnitConverter.send(action, value)
-rescue NoMethodError => e
-  puts "I don't know how to '#{action}'"
-  exit 1
+  puts CssPal::Converter.convert(action, value)
 rescue Exception => e
   puts e.message
   exit 1

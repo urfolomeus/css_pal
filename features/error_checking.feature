@@ -3,17 +3,11 @@ Feature:
 
   Scenario: running with no arguments
     When I run `css_pal`
-    Then it should fail with:
-      """
-      Correct format css_pal <mode> <value>
-      """
+    Then it should fail with help message
 
   Scenario: running with too few arguments
     When I run `css_pal to_em`
-    Then it should fail with:
-      """
-      Correct format css_pal <mode> <value>
-      """
+    Then it should fail with help message
 
   Scenario: giving an invalid value to a valid method
     When I run `css_pal to_em badger`

@@ -4,8 +4,8 @@ module CssPal
 
     def self.convert(action, value, options={})
       CONVERTERS.each do |c|
-        klass = CssPal.const_get(c)
-        if klass.instance_methods.include?(action.to_sym)
+        klass = CssPal.const_get c
+        if klass.instance_methods.include? action
           converter = klass.new(options)
           return converter.send action, value
         end

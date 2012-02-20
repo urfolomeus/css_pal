@@ -2,12 +2,22 @@
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'css_pal'
+require 'optparse'
 
 def pattern
   value_pattern = /(\d*[\.,]?\d*,?\d*)/
   mode_pattern = /(.*)/
   /#{value_pattern}#{mode_pattern}/
 end
+
+options = {}
+OptionParser.new do |opts|
+    opts.banner = "Usage: css_pal [options]"
+
+    opts.on("-p", "--precision N", Integer, "Specify the precision of the return value [DEFAULT 1]") do |p|
+      options[:precision] = p.to_i
+    end
+end.parse!
 
 begin
   mode, param = ARGV
@@ -18,7 +28,7 @@ begin
 
   action = "#{unit}_#{mode}".gsub(/^_/,'')
 
-  puts CssPal::Converter.convert(action, value)
+  puts CssPal::Converter.convert(action, value, options)
 rescue Exception => e
   puts e.message
   exit 1

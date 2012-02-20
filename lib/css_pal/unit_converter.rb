@@ -2,36 +2,43 @@ module CssPal
   class UnitConverter
     PRECISION = 1
 
-    def self.pt_to_em(val)
+    def initialize(options={})
+      @precision = options[:precision] || PRECISION
+      p @precision
+    end
+
+    def pt_to_em(val)
       convert("em") { calc_pt_to_em(val) }
     end
 
-    def self.px_to_em(val)
+    def px_to_em(val)
       convert("em") { calc_px_to_em(val) }
     end
 
-    def self.em_to_percent(val)
+    def em_to_percent(val)
       convert("%") { calc_em_to_percent(val) }
     end
 
-    def self.pt_to_percent(val)
+    def pt_to_percent(val)
       em = calc_pt_to_em(val)
       convert("%") { calc_em_to_percent(em) }
     end
 
-    def self.convert(unit, &block)
+    private
+
+    def convert(unit, &block)
       sprintf "%g#{unit}", yield
     end
 
-    def self.calc_pt_to_em(val)
-      (val.to_f / 12.0).round(PRECISION)
+    def calc_pt_to_em(val)
+      (val.to_f / 12.0).round(@precision)
     end
 
-    def self.calc_px_to_em(val)
-      (val.to_f / 16.0).round(PRECISION)
+    def calc_px_to_em(val)
+      (val.to_f / 16.0).round(@precision)
     end
 
-    def self.calc_em_to_percent(val)
+    def calc_em_to_percent(val)
       (val.to_f * 100)
     end
   end

@@ -2,10 +2,13 @@ module CssPal
   class Converter
     CONVERTERS = ['ColorConverter', 'UnitConverter']
 
-    def self.convert(action, value)
+    def self.convert(action, value, options={})
       CONVERTERS.each do |c|
-        converter = CssPal.const_get c
-        return converter.send action, value if converter.respond_to? action
+        klass = CssPal.const_get(c)
+        if klass.instance_methods.include?(action.to_sym)
+          converter = klass.new(options)
+          return converter.send action, value
+        end
       end
       raise NoMethodError, "I don't know how to '#{action}'"
     end

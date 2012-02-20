@@ -1,34 +1,5 @@
 Feature:
-  Gives the user a set of tools that can be used to convert
-  values from one unit into another.
-
-  Scenario: running with no arguments
-    When I run `css_pal`
-    Then it should fail with:
-      """
-      Correct format css_pal <mode> <value>
-      """
-
-  Scenario: running with too few arguments
-    When I run `css_pal to_em`
-    Then it should fail with:
-      """
-      Correct format css_pal <mode> <value>
-      """
-
-  Scenario: giving an invalid value to a valid method
-    When I run `css_pal to_em badger`
-    Then it should fail with:
-      """
-      I don't know how to 'badger_to_em'
-      """
-
-  Scenario: giving a valid value to an invalid method
-    When I run `css_pal badger 12pt`
-    Then it should fail with:
-      """
-      I don't know how to 'pt_badger'
-      """
+  Convert measurement values from one unit into another.
 
   Scenario Outline: converting pts to ems
     When I run `css_pal to_em <pt>`
@@ -43,6 +14,20 @@ Feature:
       | 12pt | 1em   |
       | 14pt | 1.2em |
       | 24pt | 2em   |
+
+  Scenario Outline: converting pixels to ems
+    When I run `css_pal to_em <px>`
+    Then it should pass with:
+      """
+      <em>
+      """
+
+    Examples:
+      | px   | em    |
+      |  8px | 0.5em |
+      | 16px | 1em   |
+      | 18px | 1.1em |
+      | 32px | 2em   |
 
   Scenario Outline: converting ems to percents
     When I run `css_pal to_percent <em>`
@@ -71,18 +56,4 @@ Feature:
       | 12pt | 100%    |
       | 14pt | 120%    |
       | 24pt | 200%    |
-
-  Scenario Outline: converting RGB to hex
-    When I run `css_pal to_hex <rgb>`
-    Then it should pass with:
-      """
-      <hex>
-      """
-
-    Examples:
-      | rgb         | hex     |
-      | 255,255,255 | #ffffff |
-      | 230,187,5   | #e6bb05 |
-      | 255,0,11    | #ff000b |
-      | 240,15,0    | #f00f00 |
 

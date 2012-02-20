@@ -16,6 +16,20 @@ describe CssPal::UnitConverter do
     end
   end
 
+  describe "converting px to em" do
+    it "converts 8px to 0.5em" do
+      subject.px_to_em(8).should == "0.5em"
+    end
+
+    it "converts 16px to 1.0em" do
+      subject.px_to_em(16).should == "1em"
+    end
+
+    it "converts 18px to 1.125em" do
+      subject.px_to_em(18).should == "1.1em"
+    end
+  end
+
   describe "converting em to %" do
     it "converts 0.5em to 50%" do
       subject.em_to_percent(0.5).should == "50%"

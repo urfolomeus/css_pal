@@ -6,6 +6,10 @@ module CssPal
       convert("em") { calc_pt_to_em(val) }
     end
 
+    def self.px_to_em(val)
+      convert("em") { calc_px_to_em(val) }
+    end
+
     def self.em_to_percent(val)
       convert("%") { calc_em_to_percent(val) }
     end
@@ -19,12 +23,16 @@ module CssPal
       sprintf "%g#{unit}", yield
     end
 
-    def self.calc_em_to_percent(val)
-      (val.to_f * 100)
-    end
-
     def self.calc_pt_to_em(val)
       (val.to_f / 12.0).round(PRECISION)
+    end
+
+    def self.calc_px_to_em(val)
+      (val.to_f / 16.0).round(PRECISION)
+    end
+
+    def self.calc_em_to_percent(val)
+      (val.to_f * 100)
     end
   end
 end

@@ -51,6 +51,12 @@ describe CssPal::UnitConverter do
     it "converts 2em to 200%" do
       subject.new.em_to_percent(2).should == "200%"
     end
+
+    context "with an optional precision" do
+      it "converts 1.125678em to 112.568%" do
+        subject.new(precision: 3).em_to_percent(1.125678).should == "112.568%"
+      end
+    end
   end
 
   describe "converting pt to %" do
@@ -64,6 +70,20 @@ describe CssPal::UnitConverter do
 
     it "converts 24pt to 200%" do
       subject.new.pt_to_percent(24).should == "200%"
+    end
+  end
+
+  describe "converting px to %" do
+    it "converts 8px to 50%" do
+      subject.new.px_to_percent(8).should == "50%"
+    end
+
+    it "converts 16px to 100%" do
+      subject.new.px_to_percent(16).should == "100%"
+    end
+
+    it "converts 32px to 200%" do
+      subject.new.px_to_percent(32).should == "200%"
     end
   end
 end

@@ -4,7 +4,6 @@ module CssPal
 
     def initialize(options={})
       @precision = options[:precision] || PRECISION
-      p @precision
     end
 
     def pt_to_em(val)
@@ -21,6 +20,11 @@ module CssPal
 
     def pt_to_percent(val)
       em = calc_pt_to_em(val)
+      convert("%") { calc_em_to_percent(em) }
+    end
+
+    def px_to_percent(val)
+      em = calc_px_to_em(val)
       convert("%") { calc_em_to_percent(em) }
     end
 
